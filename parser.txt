@@ -1,0 +1,11 @@
+; recursive descent parser
+; tokenization => AST/Parsing => 
+
+
+; tokenization
+; 
+
+; AST
+; in function declaration no need for implicit type sugar, 
+
+

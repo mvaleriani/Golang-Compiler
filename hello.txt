@@ -1,0 +1,48 @@
+global _main
+
+section .text
+    _exit:
+        mov rax, 0x02000001
+        mov rdi, 0
+        syscall
+
+    _print:
+        mov rax, 0x02000004
+        mov rdi, 0x01
+        mov rsi, msg
+        mov rdx, msg_len
+        
+        syscall
+        pop rax
+        jmp rax
+
+    _print_five_times:
+        mov rax, 0x05
+
+        .loop_start:
+            test rax, rax
+            jz _print_five_times.loop_over
+
+            push rax
+            ; call _print
+            mov rax, _print_five_times.ret_loc
+            push rax
+            jmp _print
+
+        .ret_loc:
+            pop rax
+
+
+            dec rax
+            jmp _print_five_times.loop_start
+
+        .loop_over:
+            ret
+
+    _main:
+        call _print_five_times
+        call _exit
+
+section .data
+    msg:    db `General Kenobi!\n`
+    msg_len:    equ $ - msg
